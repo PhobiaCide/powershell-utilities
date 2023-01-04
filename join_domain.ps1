@@ -1,7 +1,7 @@
 # Powershell script to change the current server's dns address to a domain controller,
 # And join the current server to the specified domain
 
-# Example of running this script with arguments from powershell
+# Example of running this script with arguments from command prompt
 # (Where the script is located at C:\Users\Administrator\Desktop\join_domain.ps1)
 # powershell "& ""C:\Users\Administrator\Desktop\join_domain.ps1""" "-domain test.domain" "-dns 192.168.1.1" "-username Administrator" "-password your_password"
 
