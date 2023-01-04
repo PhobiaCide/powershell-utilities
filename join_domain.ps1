@@ -22,7 +22,6 @@ param(
     [Parameter(Mandatory=$true,
     HelpMessage="The password of a domain admin, used to join the server to the domain.")]
     [string]$password="password"
-
 )
 
 # Get the network interface index
