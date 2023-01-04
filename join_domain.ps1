@@ -25,6 +25,9 @@ param(
 
 )
 
+# Get the network interface index
+$interface_index = (Get-NetAdapter).ifIndex
+
 # Set the dns ip address (Domain controller in this case)
 Set-DNSClientServerAddress -interfaceIndex $interface_index -ServerAddresses ($dns)
 
