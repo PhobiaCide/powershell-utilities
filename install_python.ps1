@@ -1,4 +1,5 @@
 # Powershell script to install the latest version of python
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     
 $latest_url = (Invoke-RestMethod "https://www.python.org/downloads/") -match "\bhref=(?<url>.+?\.exe)"
 $latest_url = $Matches.url
