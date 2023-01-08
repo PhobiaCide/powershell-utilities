@@ -5,4 +5,5 @@ Start-BitsTransfer -Source 'https://go.microsoft.com/fwlink/?linkid=2088631' -De
 Start-Process -FilePath $save_path -Args "/q /norestart /ChainingPackage ADMINDEPLOYMENT" -Verb RunAs -Wait
 
 Remove-Item $save_path
-Restart-Computer
+# Requires Restart
+#Restart-Computer
