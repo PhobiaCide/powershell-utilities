@@ -1,10 +1,8 @@
 # Powershell script to install virtio drivers and qemu agent for proxmox virtual machines
-
-# Virtio driver url
-$driver_url = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.208-1/virtio-win-gt-x64.msi"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Virtio guest tools installer url
-$installer_url = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/archive-virtio/virtio-win-0.1.208-1/virtio-win-guest-tools.exe"
+$installer_url = "https://fedorapeople.org/groups/virt/virtio-win/direct-downloads/latest-virtio/virtio-win-guest-tools.exe"
 
 function download_file {
     [CmdletBinding()]
@@ -21,7 +19,5 @@ function download_file {
     Remove-item "$env:TEMP\$( Split-Path -Path $url -Leaf )"
 }
 
-# Download and install the virtio drivers
-download_file($driver_url)
 # Download and install the virtio installer
 download_file($installer_url)
