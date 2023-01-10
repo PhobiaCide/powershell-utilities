@@ -12,5 +12,5 @@ Write-Host "Installing Python version:" $latest_version
 $installerPath = Join-Path $env:TEMP (Split-Path $latest_url -Leaf)
 
 Invoke-WebRequest $latest_url -OutFile $installerPath
-Start-Process -FilePath $installerPath -Args "/S" -Verb RunAs -Wait
+Start-Process -FilePath $installerPath -Args "/quiet InstallAllUsers=1 PrependPath=1" -Verb RunAs -Wait
 Remove-Item $installerPath
