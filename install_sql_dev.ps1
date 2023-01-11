@@ -10,6 +10,17 @@ Invoke-WebRequest $sql_dev_url -OutFile $sql_install_path
 Start-Process -FilePath $sql_install_path -Args "/Q /IACCEPTSQLSERVERLICENSETERMS /ACTION='install'" -Verb RunAs -Wait
 Remove-Item $sql_install_path
 
+# Enabled remote TCP/IP connections to the sql database(s)
+[System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
+
+$wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
+
+$tcp = $wmi.ServerInstances['MSSQLSERVER'].ServerProtocols['Tcp']
+$tcp.IsEnabled = $true  
+$tcp.Alter()  
+
+Restart-Service -Name MSSQLSERVER -Force
+
 # Install Management Studio
 $ssms_url = "https://aka.ms/ssmsfullsetup"
 $ssms_install_path = "$env:TEMP\SSMS-Setup-ENU.exe"
