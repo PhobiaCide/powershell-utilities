@@ -3,6 +3,7 @@
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 # Install SQL
+# https://learn.microsoft.com/en-us/sql/database-engine/install-windows/install-sql-server-from-the-command-prompt?view=sql-server-ver16
 $sql_dev_url = "https://go.microsoft.com/fwlink/p/?linkid=2215158&clcid=0x409&culture=en-us&country=us"
 $sql_install_path = "$env:TEMP\SQL2022-SSEI-Dev.exe"
 
@@ -11,6 +12,7 @@ Start-Process -FilePath $sql_install_path -Args "/Q /IACCEPTSQLSERVERLICENSETERM
 Remove-Item $sql_install_path
 
 # Enabled remote TCP/IP connections to the sql database(s)
+# https://learn.microsoft.com/en-us/sql/powershell/how-to-enable-tcp-sqlps?view=sql-server-ver16
 [System.Reflection.Assembly]::LoadWithPartialName('Microsoft.SqlServer.SqlWmiManagement')
 
 $wmi = New-Object 'Microsoft.SqlServer.Management.Smo.Wmi.ManagedComputer' localhost
