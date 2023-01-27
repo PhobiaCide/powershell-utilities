@@ -14,3 +14,7 @@ $installerPath = Join-Path $env:TEMP (Split-Path $latest_url -Leaf)
 Invoke-WebRequest $latest_url -OutFile $installerPath
 Start-Process -FilePath $installerPath -Args "/quiet InstallAllUsers=1 PrependPath=1" -Verb RunAs -Wait
 Remove-Item $installerPath
+
+# Add python to PATH
+$executable_path = py -$latest_version -c "import sys; print(sys.executable[:-10])"
+setx path "%path%;$executable_path"

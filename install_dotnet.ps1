@@ -6,4 +6,4 @@ Start-Process -FilePath $save_path -Args "/q /norestart /ChainingPackage ADMINDE
 
 Remove-Item $save_path
 # Requires Restart
-#Restart-Computer
+Restart-Computer
