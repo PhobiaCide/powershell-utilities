@@ -1,3 +1,5 @@
+# Powershell script to install google chrome
+
 # Modern websites require TLS 1.2
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 $LocalTempDir = $env:TEMP
