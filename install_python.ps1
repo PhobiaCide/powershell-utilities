@@ -17,5 +17,6 @@ Remove-Item $installerPath
 
 # Add python and pip to PATH
 $executable_path = py -$latest_version -c "import sys; print(sys.executable[:-10])"
-setx var ("$executable_path" + "Scripts\")
-setx path "%path%;$executable_path"
+$scripts_path = $executable_path + "Scripts\"
+setx path "%path%;$executable_path;$scripts_path"
+
