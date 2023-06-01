@@ -16,7 +16,10 @@ Start-Process -FilePath $installerPath -Args "/quiet InstallAllUsers=1 PrependPa
 Remove-Item $installerPath
 
 # Add python and pip to PATH
-$executable_path = py -$latest_version -c "import sys; print(sys.executable[:-10])"
+$path_key = (Get-ChildItem -Path "HKLM:\SOFTWARE\Python\PythonCore\" -Recurse).Name -Like "*InstallPath"
+$path_key = $path_key.replace("HKEY_LOCAL_MACHINE", "HKLM:")
+$executable_path = (Get-ItemProperty -Path $path_key).ExecutablePath
+
 $scripts_path = $executable_path + "Scripts\"
 setx path "%path%;$executable_path;$scripts_path"
 
