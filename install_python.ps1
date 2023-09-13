@@ -20,6 +20,9 @@ $path_key = (Get-ChildItem -Path "HKLM:\SOFTWARE\Python\PythonCore\" -Recurse).N
 $path_key = $path_key.replace("HKEY_LOCAL_MACHINE", "HKLM:")
 $executable_path = (Get-ItemProperty -Path $path_key).ExecutablePath
 
-$scripts_path = $executable_path + "Scripts\"
-setx path "%path%;$executable_path;$scripts_path"
+# Create global and user paths for scripts
+$split_version = $latest_version.Split(".")
+$scripts_user_path = "c:\users\" + $Env:UserName + "\appdata\roaming\python\python" + $split_version[0] + $split_version[1] + "\Scripts\"
+$scripts_global_path = $executable_path + "Scripts\"
 
+setx path "%path%;$executable_path;$scripts_global_path;$scripts_user_path"
