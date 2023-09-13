@@ -22,7 +22,8 @@ $executable_path = (Get-ItemProperty -Path $path_key).ExecutablePath
 
 # Create global and user paths for scripts
 $split_version = $latest_version.Split(".")
-$scripts_user_path = "c:\users\" + $Env:UserName + "\appdata\roaming\python\python" + $split_version[0] + $split_version[1] + "\Scripts\"
-$scripts_global_path = $executable_path + "Scripts\"
+$scripts_user_path = "C:\Users\" + $Env:UserName + "\appdata\roaming\python\python" + $split_version[0] + $split_version[1] + "\Scripts\"
+$scripts_global_path = (Split-Path -parent $executable_path) + "\Scripts\"
 
+# This adds to the user path variable, not the system path variable
 setx path "%path%;$executable_path;$scripts_global_path;$scripts_user_path"
