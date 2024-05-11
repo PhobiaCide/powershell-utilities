@@ -1,0 +1,41 @@
+# Function to calculate folder size
+function Get-FolderSize {
+    param (
+        [Parameter(Mandatory = $true, Position = 0)]
+        [string]$FolderPath
+    )
+
+    Get-ChildItem $FolderPath -Recurse |
+        Where-Object { $_.PSIsContainer } |
+        ForEach-Object { $_.FullName } |
+        Get-ChildItem -Force |
+        Measure-Object -Sum Length |
+        Select-Object -ExpandProperty Sum
+}
+
+# Main script
+$folderSizes = @()
+$currentDir = Get-Location
+
+Write-Host "Calculating folder sizes, please wait..."
+
+$allFolders = Get-ChildItem -Directory | ForEach-Object {
+    $size = Get-FolderSize -FolderPath $_.FullName
+    $folder = [PSCustomObject]@{
+        FolderName = $_.Name
+        SizeKB = [Math]::Ceiling($size / 1KB)
+    }
+    $folderSizes += $folder
+    Write-Host "Processed folder: $($_.Name)"
+}
+
+$sortedFolders = $folderSizes | Sort-Object -Property SizeKB -Descending
+
+$tableFormat = @{Expression={$_.SizeKB.ToString("N0")}; Label="Size (KB)"; Alignment="right"}, @{Expression={$_.FolderName}; Label="Folder Name"; Width=50}
+
+$sortedFolders | Format-Table $tableFormat
+
+$totalSizeKB = $sortedFolders | Measure-Object -Property SizeKB -Sum | Select-Object -ExpandProperty Sum
+Write-Host "Total Size: $($totalSizeKB.ToString("N0")) KB"
+
+Pause
